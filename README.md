@@ -66,3 +66,7 @@ Keep manifest ordering consistent with training. `evaluate.py` currently uses `D
 | `pretrain_fastmri*_ssl.py` | Self-supervised pretraining |
 | `uih_supervised_adaptation.py` | Supervised adaptation experiments |
 | `ablation_study.py` | Ablation experiments |
+
+## License
+
+This project is licensed under the terms of the [Apache License 2.0](./LICENSE)
