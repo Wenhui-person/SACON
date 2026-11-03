@@ -1,0 +1,68 @@
+{
+  "experiment_id": "stage_ablation_seed42",
+  "data_root": "E:\\3D_MedicalImageProcessing_for_Training\\ONFH_MRI_SIEMENS_Generation\\50_7\\siemens_onfh_data_generation.json",
+  "case_data_root": "E:\\3D_MedicalImageProcessing_for_Training\\ONFH_MRI_SIEMENS\\test_data",
+  "case_label_manifest": "E:\\3D_MedicalImageProcessing_for_Training\\ONFH_MRI_SIEMENS\\siemens_onfh_data.json",
+  "external_data_root": "E:\\3D_MedicalImageProcessing_for_Training\\ONFH_MRI_UIH\\uih_onfh_data_resampled.json",
+  "output_root": "E:\\BackupToDriveF\\myprojects\\SACON-ONFH-Ablation_Study",
+  "ssl_checkpoint": "checkpoints\\ssl_fastmri_clinical\\fastmri_clinical_encoder_ssl_best.pth",
+  "_消融内容说明": {
+    "full": "完整 SACON，保留配准、双模态门控、对侧显式差分、差分注意力、结构-信号解耦和局部差分门控。",
+    "no_contralateral": "对侧信息消融：仅使用同侧信息，检验双侧对称信息的总体贡献。",
+    "bilateral_no_diff": "显式差分消融：仍输入双侧影像，但不构造左右髋显式差分特征。",
+    "no_registration": "配准消融：取消右髋镜像和可变形配准，检验空间对齐的贡献。",
+    "flip_only": "可变形配准消融：仅镜像翻转右髋，不进行可变形配准。",
+    "no_modal_gate": "双模态门控消融：T1/T2 改为等权平均融合。",
+    "no_diff_attention": "差分注意力消融：保留显式差分，但取消差分引导的交叉注意力。",
+    "no_decoupling": "结构-信号解耦消融：不再将特征分解为结构成分与信号成分。",
+    "no_local_diff_gate": "局部差分门控消融：保留局部与差分投影，只移除乘性门控，避免维度变化造成混杂。",
+    "损失约束": "本研究不进行集中性损失消融；全局和局部集中性损失权重始终固定为 0。",
+    "组件汇总":["full", "no_contralateral", "bilateral_no_diff", "no_registration", "flip_only", "no_modal_gate", "no_diff_attention", "no_decoupling", "no_local_diff_gate"]
+  },
+  "variants": [
+    "full", "no_contralateral", "bilateral_no_diff", "no_registration", "flip_only", "no_modal_gate", "no_diff_attention", "no_decoupling", "no_local_diff_gate"
+  ],
+  "folds": [0, 1, 2, 3, 4],
+  "seed": 42,
+  "training": {
+    "epochs": 100,
+    "batch_size": 2,
+    "learning_rate": 0.0000896,
+    "base_channels": 32,
+
+    "num_workers": 2,
+    "pin_memory": true,
+    "persistent_workers": true,
+
+    "prefetch_factor": 2,
+    "freeze_encoder_epochs": 0,
+    "patience": 10,
+    "volume_size": [19, 314, 224],
+    "feature_cloud_interval": 0,
+    "feature_cloud_3d": false,
+    "save_best_feature_cloud": false,
+
+    "grad_flow_interval": 0,
+    "grad_flow_samples": 1,
+
+    "tensorboard_image_interval": 0,
+    "progress_update_interval": 20,
+    "enable_cam_hooks": false,
+    "plot_interval": 0,
+    "plot_on_best": true
+  },
+  "loss": {
+    "alpha_stage": 0.82,
+    "alpha_registration": 0.12,
+    "alpha_decoupling": 0.08,
+    "alpha_concentration": 0.0,
+    "alpha_local_concentration": 0.0
+  },
+  "split": {
+    "mode": "repeated_random_holdout",
+    "n_repeats": 5,
+    "real_test_ratio": 0.3,
+    "random_state": 42,
+    "synthetic_train_only": true
+  }
+}
