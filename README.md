@@ -68,7 +68,8 @@ Keep manifest ordering consistent with training. `evaluate.py` currently uses `D
 | `ablation_study.py` | Ablation experiments |
 
 [!NOTE]
-<!--The code repository is still being reviewed.--!>
+<!-- The code repository is still being reviewed. --!>
+
 
 ## License
 
