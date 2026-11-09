@@ -67,6 +67,9 @@ Keep manifest ordering consistent with training. `evaluate.py` currently uses `D
 | `uih_supervised_adaptation.py` | Supervised adaptation experiments |
 | `ablation_study.py` | Ablation experiments |
 
+[!NOTE]
+<!--The code repository is still being reviewed.--!>
+
 ## License
 
 This project is licensed under the terms of the [Apache License 2.0](./LICENSE)
